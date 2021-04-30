@@ -31,7 +31,11 @@ const Student = ({ match, history }) => {
         history.push('/students');
     }
 
-    const save = () => {
+    const save = (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+
         if (id === '0') {
             const { firstName, lastName, yearOfBirth, adress } = student;
             insert('students', { firstName, lastName, yearOfBirth, adress }, data => {
@@ -57,51 +61,54 @@ const Student = ({ match, history }) => {
     return (
         <div className='container'>
             <h2>Student</h2>
-            <form className='input-form'>
-                <div style={{ margin: '12px 0' }}>
-                    <label htmlFor='firstName'>First Name</label>
-                    <input type='text'
-                        name='firstName'
-                        value={student.firstName}
-                        onChange={changeHandler} />
-                </div>
-                <div style={{ margin: '12px 0' }}>
-                    <label htmlFor='lastName'>Last Name:</label>
-                    <input type='text'
-                        name='lastName'
-                        value={student.lastName}
-                        onChange={changeHandler} />
-                </div>
+            <form className='input-form' onSubmit={save}>
+            <div style={{ margin: '12px 0' }}>
+                <label htmlFor='firstName'>First Name</label>
+                <input type='text'
+                    name='firstName'
+                    required
+                    value={student.firstName}
+                    onChange={changeHandler} />
+            </div>
 
-                <div style={{ margin: '12px 0' }}>
-                    <label htmlFor='yearOfBirth'>Year of Birth</label>
-                    <input type='text'
-                        name='yearOfBirth'
-                        value={student.yearOfBirth}
-                        onChange={changeHandler} />
-                </div>
+            <div style={{ margin: '12px 0' }}>
+                <label htmlFor='lastName'>Last Name</label>
+                <input type='text'
+                    name='lastName'
+                    required
+                    value={student.lastName}
+                    onChange={changeHandler} />
+            </div>
 
-                <div style={{ margin: '12px 0' }}>
-                    <label htmlFor='adress'>Adress</label>
-                    <input type='text'
-                        name='adress'
-                        value={student.adress}
-                        onChange={changeHandler} />
-                </div>
+            <div style={{ margin: '12px 0' }}>
+                <label htmlFor='yearOfBirth'>Year of Birth</label>
+                <input type='text'
+                    name='yearOfBirth'
+                    value={student.yearOfBirth}
+                    onChange={changeHandler} />
+            </div>
 
-                <hr />
-                {id !== '0' && (
-                    <div className='left'>
-                        <button type='button' onClick={del}>DELETE</button>
-                    </div>
-                )}
-                <div className='right'>
-                    <button type='button' onClick={back}>BACK</button>
+            <div style={{ margin: '12px 0' }}>
+                <label htmlFor='adress'>Adress</label>
+                <input type='text'
+                    name='adress'
+                    value={student.adress}
+                    onChange={changeHandler} />
+            </div>
+
+            <hr />
+            {id !== '0' && (
+                <div className='left'>
+                    <button type='button' onClick={del}>DELETE</button>
+                </div>
+            )}
+            <div className='right'>
+                <button type='button' onClick={back}>BACK</button>
                     &nbsp;&nbsp;
-                    <button type='button' onClick={save}>SAVE</button>
-                </div>
+                    <button type='submit'>SAVE</button>
+            </div>
             </form>
-        </div>
+        </div >
     );
 }
 export default Student;

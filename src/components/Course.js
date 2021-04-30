@@ -29,7 +29,10 @@ const Course = ({ match, history }) => {
         history.push('/courses');
     }
 
-    const save = () => {
+    const save = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
         if (id === '0') {
             insert('courses', { name: course.name, points: course.points }, data => {
                 if (data) return history.push('/courses');
@@ -45,28 +48,28 @@ const Course = ({ match, history }) => {
     }
 
     const del = () => {
-    
+
         remove('courses', id, data => {
             history.push('/courses');
         })
     }
 
-
-
     return (
         <div className='container'>
             <h2>Course</h2>
-            <form className='input-form'>
+            <form className='input-form' onSubmit={save}>
                 <div style={{ margin: '12px 0' }}>
                     <label htmlFor='name'>Course name:</label>
                     <input type='text'
                         name='name'
+                        required
                         value={course.name}
                         onChange={changeHandler} />
                 </div>
                 <div style={{ margin: '12px 0' }}>
                     <label htmlFor='points'>Course points:</label>
-                    <input type='text'
+                    <input type='number'
+                        required
                         name='points'
                         value={course.points}
                         onChange={changeHandler} />
@@ -80,7 +83,7 @@ const Course = ({ match, history }) => {
                 <div className='right'>
                     <button type='button' onClick={back}>BACK</button>
                     &nbsp;&nbsp;
-                    <button type='button' onClick={save}>SAVE</button>
+                    <button type='submit'>SAVE</button>
                 </div>
             </form>
         </div>
